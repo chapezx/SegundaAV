@@ -1,0 +1,13 @@
+[
+    { "etapa": 0, "titulo": "Preparar o repositório no GitHub", "status": "concluida" },
+    { "etapa": 1, "titulo": "Criar o projeto no Cloudflare Pages", "status": "concluida" },
+    { "etapa": 2, "titulo": "Criar e ligar o banco D1", "status": "concluida" },
+    { "etapa": 3, "titulo": "Registrar o cliente no Google", "status": "concluida" },
+    { "etapa": 4, "titulo": "Registrar a OAuth App no GitHub", "status": "concluida" },
+    { "etapa": 5, "titulo": "Cadastrar variáveis e segredos", "status": "concluida" },
+    { "etapa": 6, "titulo": "Implementar as Pages Functions", "status": "concluida" },
+    { "etapa": 7, "titulo": "Ligar a página estática", "status": "concluida" },
+    { "etapa": 8, "titulo": "Testar a implantação pelo navegador", "status": "concluida" },
+    { "etapa": 9, "titulo": "Executar os testes de falha", "status": "andamento" },
+    { "etapa": 10, "titulo": "Entregar as evidências", "status": "pendente" }
+]
