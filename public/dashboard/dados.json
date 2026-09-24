@@ -8,6 +8,6 @@
     { "etapa": 6, "titulo": "Implementar as Pages Functions", "status": "concluida" },
     { "etapa": 7, "titulo": "Ligar a página estática", "status": "concluida" },
     { "etapa": 8, "titulo": "Testar a implantação pelo navegador", "status": "concluida" },
-    { "etapa": 9, "titulo": "Executar os testes de falha", "status": "andamento" },
-    { "etapa": 10, "titulo": "Entregar as evidências", "status": "pendente" }
+    { "etapa": 9, "titulo": "Executar os testes de falha", "status": "concluida" },
+    { "etapa": 10, "titulo": "Entregar as evidências", "status": "andamento" }
 ]
