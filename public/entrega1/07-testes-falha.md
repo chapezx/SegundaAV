@@ -12,11 +12,10 @@ Nenhum valor de cookie, codigo, token, state, nonce ou code_challenge aparece ne
 - **Preparacao:** login iniciado em uma janela comum e interrompido na pagina do provedor; a URL
   de autorizacao foi copiada para uma janela privativa sem o cookie `__Host-oauth-tx`, e o login
   foi concluido nessa segunda janela.
-- **Pedido enviado:** `GET /oauth/callback/{provedor}?code=[REMOVIDO]&state=[REMOVIDO]` sem o
+- **Pedido enviado:** `GET /oauth/callback/github?code=[REMOVIDO]&state=[REMOVIDO]` sem o
   cookie `__Host-oauth-tx`.
 - **Resultado esperado:** recusa do retorno e nenhuma sessao criada.
-- **Resultado observado:** [PREENCHER]
-  - Deve aparecer: HTTP 400, corpo `{"error":"transacao ausente"}`, sem `Set-Cookie` de sessao.
+- **Resultado observado:** o retorno foi recusado com `{"error":"transacao ausente"}` na janela privativa; nenhuma sessao foi criada.
 
 ## Caso 2: state alterado
 
@@ -25,19 +24,20 @@ Nenhum valor de cookie, codigo, token, state, nonce ou code_challenge aparece ne
 - **Pedido enviado:** retorno com o `state` alterado. A URL modificada nao foi registrada porque
   contem valores transitorios.
 - **Resultado esperado:** recusa antes da troca do codigo.
-- **Resultado observado:** [PREENCHER]
-  - Deve aparecer: HTTP 400, corpo `{"error":"state invalido"}`.
+- **Resultado observado:** o retorno foi recusado com `{"error":"state invalido"}`; a comparacao do resumo de `state` falhou antes da troca do codigo, portanto nenhum token foi solicitado e nenhuma sessao foi criada.
 
 ## Caso 3: reutilizacao da transacao
 
-- **Preparacao:** fluxo concluido com sucesso; a requisicao de retorno foi copiada com Copy URL no
-  painel Network.
+- **Preparacao:** login iniciado na janela comum e interrompido na pagina do GitHub; a URL de
+  autorizacao foi concluida em uma janela privativa, que recusou o retorno por falta do cookie
+  `__Host-oauth-tx` e deixou a URL de retorno (ainda nao usada) na barra de endereco. Essa URL foi
+  copiada da barra e aberta na janela comum, que possuia o cookie: o fluxo foi concluido com sucesso
+  e a sessao foi criada (conferido no console do D1). O painel Network nao exibiu a requisicao de
+  retorno neste navegador, por isso a URL foi obtida pela barra de endereco.
 - **Pedido enviado:** a mesma URL de retorno aberta uma segunda vez.
 - **Resultado esperado:** falha, pois a transacao ja foi apagada do D1 e o cookie temporario foi
   limpo no primeiro retorno.
-- **Resultado observado:** [PREENCHER]
-  - Deve aparecer: HTTP 400, corpo `{"error":"transacao ausente"}` (o cookie `__Host-oauth-tx`
-    foi expirado no retorno bem-sucedido).
+- **Resultado observado:** a repeticao foi recusada com `{"error":"transacao ausente"}`: o primeiro retorno ja havia apagado a transacao no D1 e expirado o cookie `__Host-oauth-tx`, entao o codigo nao foi trocado de novo.
 
 ## Caso 4: sessao expirada
 
