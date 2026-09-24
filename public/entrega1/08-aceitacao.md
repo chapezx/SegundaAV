@@ -1,9 +1,9 @@
 # Criterios de aceitacao
 
-Projeto: NOME-DO-PROJETO
-URL de producao: https://NOME-DO-PROJETO.pages.dev
+Projeto: segundaav
+URL de producao: https://segundaav.pages.dev
 Dupla: NOME 1 e NOME 2
-Data: ____/____/______
+Data: 24/09/2026
 
 - [ ] o site e servido pelo endereco pages.dev atribuido a equipe;
 - [ ] os arquivos estaticos e as Functions compartilham a mesma origem;

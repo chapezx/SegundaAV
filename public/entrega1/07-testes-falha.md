@@ -45,9 +45,7 @@ Nenhum valor de cookie, codigo, token, state, nonce ou code_challenge aparece ne
   `UPDATE sessions SET expires_at = 0;`.
 - **Pedido enviado:** `GET /api/me` apos recarregar a pagina.
 - **Resultado esperado:** HTTP 401.
-- **Resultado observado:** [PREENCHER]
-  - Deve aparecer: HTTP 401, corpo `{"error":"sessao invalida"}`, `Cache-Control: no-store`;
-    a pagina mostra "Nenhuma sessao neste navegador.".
+- **Resultado observado:** HTTP 401 com o corpo `{"error":"sessao invalida"}` e `Cache-Control: no-store`; a pagina inicial passou a exibir "Nenhuma sessao neste navegador.".
 
 ## Caso 5: origem invalida na saida
 
@@ -55,10 +53,7 @@ Nenhum valor de cookie, codigo, token, state, nonce ou code_challenge aparece ne
 - **Pedido enviado:** `fetch("URL_BASE/oauth/logout", { method: "POST", credentials: "include" })`
   executado no console de https://example.com.
 - **Resultado esperado:** recusa da operacao e permanencia da sessao original.
-- **Resultado observado:** [PREENCHER]
-  - Deve aparecer: na aba Network, HTTP 403 com `{"error":"origem invalida"}`; no console, um
-    erro de CORS (a resposta nao e liberada para example.com). De volta a URL_BASE, `/api/me`
-    continua respondendo 200.
+- **Resultado observado:** no console de https://example.com o `fetch` terminou em `TypeError: Failed to fetch` (a resposta foi bloqueada pelo CORS); a rota respondeu HTTP 403 com o corpo `{"error":"origem invalida"}` e `Cache-Control: no-store`. De volta a URL_BASE, `/api/me` respondeu 200 antes e depois do teste, ou seja, a sessao original permaneceu valida.
 
 ## Caso 6: reutilizacao do cookie revogado
 

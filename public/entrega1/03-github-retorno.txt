@@ -1,2 +1,2 @@
-Homepage URL: https://NOME-DO-PROJETO.pages.dev
-Authorization callback URL: https://NOME-DO-PROJETO.pages.dev/oauth/callback/github
+Homepage URL: https://segundaav.pages.dev
+Authorization callback URL: https://segundaav.pages.dev/oauth/callback/github
