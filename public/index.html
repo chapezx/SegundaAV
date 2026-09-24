@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Laboratorio de autenticacao</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+    <main>
+        <h1>Laboratorio de autenticacao</h1>
+        <p id="status">A sessao ainda nao foi consultada.</p>
+
+        <section id="entrar">
+            <h2>Entrar</h2>
+            <p>
+                <a class="botao" href="/oauth/login/google">Entrar com Google</a>
+                <a class="botao" href="/oauth/login/github">Entrar com GitHub</a>
+            </p>
+        </section>
+
+        <section id="sair" hidden>
+            <h2>Sessao</h2>
+            <dl>
+                <dt>Emissor</dt>
+                <dd id="emissor">-</dd>
+                <dt>Identificador</dt>
+                <dd id="assunto">-</dd>
+            </dl>
+            <form method="post" action="/oauth/logout">
+                <button type="submit">Sair</button>
+            </form>
+        </section>
+
+        <p class="aviso">
+            Ocultar um link nao torna um arquivo privado. Tudo o que esta em <code>public</code>
+            continua acessivel pela URL correspondente. Somente as rotas dinamicas conferem a sessao.
+        </p>
+    </main>
+
+    <script src="/app.js"></script>
+</body>
+
+</html>

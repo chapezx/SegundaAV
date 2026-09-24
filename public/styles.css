@@ -1,0 +1,65 @@
+:root {
+    color-scheme: light dark;
+    font-family: system-ui, sans-serif;
+    line-height: 1.5;
+}
+
+body {
+    margin: 0;
+    padding: 2rem 1rem;
+}
+
+main {
+    margin: 0 auto;
+    max-width: 42rem;
+}
+
+h1 {
+    font-size: 1.6rem;
+}
+
+#status {
+    padding: 0.75rem 1rem;
+    border-left: 4px solid currentColor;
+    background: rgba(127, 127, 127, 0.12);
+}
+
+.botao {
+    display: inline-block;
+    margin-right: 0.5rem;
+    padding: 0.6rem 1.1rem;
+    border-radius: 0.4rem;
+    border: 1px solid currentColor;
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    padding: 0.6rem 1.1rem;
+    border-radius: 0.4rem;
+    border: 1px solid currentColor;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+}
+
+dl {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0.25rem 1rem;
+}
+
+dt {
+    font-weight: 600;
+}
+
+dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.aviso {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
