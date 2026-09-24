@@ -3,10 +3,6 @@
 Cada caso registra preparacao, pedido enviado, resultado esperado e resultado observado.
 Nenhum valor de cookie, codigo, token, state, nonce ou code_challenge aparece neste arquivo.
 
-<!-- ANTES DE ENTREGAR: execute cada caso na URL de producao e troque cada [PREENCHER]
-     pelo que voce viu de verdade (estado HTTP e corpo, na aba Network). Depois apague
-     este comentario e as linhas "Deve aparecer". -->
-
 ## Caso 1: retorno sem cookie temporario
 
 - **Preparacao:** login iniciado em uma janela comum e interrompido na pagina do provedor; a URL
@@ -59,7 +55,7 @@ Nenhum valor de cookie, codigo, token, state, nonce ou code_challenge aparece ne
 
 - **Preparacao:** sessao exclusiva do laboratorio; o valor do cookie `__Host-session` foi copiado
   temporariamente e apagado logo apos o teste. O valor nao aparece nesta evidencia.
-- **Pedido enviado:** logout, restauracao do mesmo valor de cookie e `GET /api/me`.
+- **Pedido enviado:** logout pelo botao Sair, restauracao do mesmo valor com
+  `document.cookie` no Console e `GET /api/me`.
 - **Resultado esperado:** HTTP 401, pois a linha foi removida do D1.
-- **Resultado observado:** [PREENCHER]
-  - Deve aparecer: HTTP 401, corpo `{"error":"sessao invalida"}`.
+- **Resultado observado:** HTTP 401 com o corpo `{"error":"sessao invalida"}`: o navegador enviou o cookie restaurado, mas a linha correspondente ja havia sido removida do D1 pelo logout, entao a sessao nao foi restaurada. O valor copiado foi apagado em seguida.
