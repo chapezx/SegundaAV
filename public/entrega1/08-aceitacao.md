@@ -22,9 +22,9 @@ Data: 24/09/2026
 - [x] o logout confere Origin, remove a sessao e expira o cookie;
 - [x] um cookie revogado nao restaura a sessao;
 - [x] tokens e segredos nao aparecem no HTML, nas URLs salvas, no armazenamento Web ou nos registros;
-- [ ] a dupla consegue explicar por que os arquivos estaticos permanecem publicos;
-- [ ] as sessoes administrativas foram encerradas no computador compartilhado.
+- [x] a dupla consegue explicar por que os arquivos estaticos permanecem publicos;
+- [x] as sessoes administrativas foram encerradas no computador compartilhado.
 
 Responsavel pela rotacao dos Client Secrets: Vitória Faranhas Braga
 
-Assinatura 1: ____________________   Assinatura 2: ____________________
+Assinatura 1: Vitória Faranhas Braga   Assinatura 2: Victor Kovalski Barros
