@@ -4,72 +4,57 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Painel do laboratório</title>
+    <title>Painel</title>
+    <!-- Reaproveita o estilo do site e acrescenta o estilo do painel -->
+    <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="/dashboard/painel.css">
 </head>
 
 <body>
-    <header class="topo">
-        <h1>Painel do laboratório</h1>
-        <nav>
-            <a href="/">Início</a>
+    <main>
+        <nav class="topo">
+            <a href="/">Voltar ao início</a>
+            <!-- Botão Sair: fica escondido até o painel.js confirmar que há sessão -->
             <form method="post" action="/oauth/logout" id="form-sair" hidden>
                 <button type="submit">Sair</button>
             </form>
         </nav>
-    </header>
 
-    <main>
-        <!-- Saudação: preenchida pelo painel.js depois de consultar /api/me -->
-        <p id="saudacao" class="saudacao">Consultando a sessão...</p>
+        <h1>Painel</h1>
+        <p id="saudacao">Consultando a sessão...</p>
 
-        <!-- Cartões com os totais -->
-        <section class="cartoes">
-            <article class="cartao">
-                <span class="numero" id="total">-</span>
-                <span class="rotulo">Etapas</span>
-            </article>
-            <article class="cartao concluida">
-                <span class="numero" id="concluidas">-</span>
-                <span class="rotulo">Concluídas</span>
-            </article>
-            <article class="cartao andamento">
-                <span class="numero" id="andamento">-</span>
-                <span class="rotulo">Em andamento</span>
-            </article>
-            <article class="cartao pendente">
-                <span class="numero" id="pendentes">-</span>
-                <span class="rotulo">Pendentes</span>
-            </article>
-        </section>
-
-        <!-- Barra de progresso -->
-        <section>
-            <h2>Progresso</h2>
-            <div class="barra">
-                <div class="preenchimento" id="preenchimento"></div>
+        <!-- Três indicadores preenchidos pelo painel.js -->
+        <section class="indicadores">
+            <div class="indicador">
+                <span class="nome">Servidor</span>
+                <strong id="servidor">...</strong>
             </div>
-            <p id="percentual">0% concluído</p>
+            <div class="indicador">
+                <span class="nome">Sessão</span>
+                <strong id="sessao">...</strong>
+            </div>
+            <div class="indicador">
+                <span class="nome">Provedor</span>
+                <strong id="provedor">...</strong>
+            </div>
         </section>
 
-        <!-- Tabela com todas as etapas -->
-        <section>
-            <h2>Etapas</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nº</th>
-                        <th>Etapa</th>
-                        <th>Situação</th>
-                    </tr>
-                </thead>
-                <tbody id="linhas"></tbody>
-            </table>
+        <!-- Dados da conta: aparecem só quando /api/me responde 200 -->
+        <section id="dados" hidden>
+            <h2>Seus dados</h2>
+            <dl>
+                <dt>Nome</dt>
+                <dd id="nome">-</dd>
+                <dt>E-mail</dt>
+                <dd id="email">-</dd>
+                <dt>Identificador</dt>
+                <dd id="identificador">-</dd>
+            </dl>
         </section>
 
         <p class="aviso">
-            Este painel é um arquivo estático em <code>public</code>: qualquer pessoa consegue abri-lo pela URL,
-            mesmo sem login. Só as rotas <code>/api</code> e <code>/oauth</code> conferem a sessão.
+            Esta página é um arquivo estático da pasta <code>public</code>: qualquer pessoa abre pela URL,
+            mesmo sem login. O que é protegido são os dados vindos de <code>/api/me</code>.
         </p>
     </main>
 

@@ -1,68 +1,53 @@
-// Painel do laboratorio: JavaScript puro, sem bibliotecas.
+// Painel: JavaScript puro, sem bibliotecas.
+// Ele faz duas perguntas ao servidor e mostra as respostas na tela.
 
-// Texto exibido para cada situacao do arquivo dados.json.
-const NOMES = {
-    concluida: "Concluída",
-    andamento: "Em andamento",
-    pendente: "Pendente"
-};
+// Função pequena para escrever um texto em um elemento e escolher a cor.
+function mostrar(id, texto, situacao) {
+    const elemento = document.getElementById(id);
+    elemento.textContent = texto;
+    elemento.className = situacao; // "ok" (verde) ou "falha" (vermelho)
+}
 
-// 1. Pergunta ao servidor quem esta logado.
-//    /api/me responde 200 com o perfil ou 401 quando nao ha sessao.
+// Pergunta 1: o servidor está no ar?
+// /api/health é uma Pages Function que sempre responde {"status":"ok"}.
+fetch("/api/health")
+    .then((resposta) => {
+        if (resposta.ok) {
+            mostrar("servidor", "No ar", "ok");
+        } else {
+            mostrar("servidor", "Com erro", "falha");
+        }
+    })
+    .catch(() => mostrar("servidor", "Sem resposta", "falha"));
+
+// Pergunta 2: quem está logado neste navegador?
+// /api/me confere o cookie de sessão no D1.
+// Responde 200 com o perfil ou 401 quando não há sessão.
 fetch("/api/me", { credentials: "same-origin" })
     .then((resposta) => (resposta.ok ? resposta.json() : null))
     .then((usuario) => {
-        const saudacao = document.getElementById("saudacao");
-        if (usuario) {
-            saudacao.textContent = `Olá, ${usuario.displayName}! Você entrou pelo ${usuario.issuer}.`;
-            document.getElementById("form-sair").hidden = false;
-        } else {
-            saudacao.textContent = "Você não está logado. O painel continua visível porque é um arquivo público.";
+        if (!usuario) {
+            document.getElementById("saudacao").textContent =
+                "Você não está logado. Entre pela página inicial para ver seus dados.";
+            mostrar("sessao", "Nenhuma", "falha");
+            mostrar("provedor", "-", "");
+            return;
         }
-    });
 
-// 2. Le as etapas do arquivo dados.json e monta a tela.
-fetch("/dashboard/dados.json")
-    .then((resposta) => resposta.json())
-    .then((etapas) => {
-        // Conta quantas etapas existem em cada situacao.
-        const total = etapas.length;
-        const concluidas = etapas.filter((e) => e.status === "concluida").length;
-        const andamento = etapas.filter((e) => e.status === "andamento").length;
-        const pendentes = etapas.filter((e) => e.status === "pendente").length;
+        // O issuer diz quem confirmou a identidade: Google ou GitHub.
+        const provedor = usuario.issuer.includes("google") ? "Google" : "GitHub";
 
-        // Preenche os cartoes.
-        document.getElementById("total").textContent = total;
-        document.getElementById("concluidas").textContent = concluidas;
-        document.getElementById("andamento").textContent = andamento;
-        document.getElementById("pendentes").textContent = pendentes;
+        document.getElementById("saudacao").textContent = `Olá, ${usuario.displayName}!`;
+        mostrar("sessao", "Ativa", "ok");
+        mostrar("provedor", provedor, "ok");
 
-        // Calcula o percentual e ajusta a largura da barra.
-        const percentual = Math.round((concluidas / total) * 100);
-        document.getElementById("preenchimento").style.width = `${percentual}%`;
-        document.getElementById("percentual").textContent = `${percentual}% concluído`;
-
-        // Cria uma linha da tabela para cada etapa.
-        const linhas = document.getElementById("linhas");
-        for (const etapa of etapas) {
-            const linha = document.createElement("tr");
-
-            const numero = document.createElement("td");
-            numero.textContent = etapa.etapa;
-
-            const titulo = document.createElement("td");
-            titulo.textContent = etapa.titulo;
-
-            const situacao = document.createElement("td");
-            const selo = document.createElement("span");
-            selo.className = `selo ${etapa.status}`;
-            selo.textContent = NOMES[etapa.status];
-            situacao.appendChild(selo);
-
-            linha.append(numero, titulo, situacao);
-            linhas.appendChild(linha);
-        }
+        // Preenche e mostra a seção "Seus dados" e o botão Sair.
+        document.getElementById("nome").textContent = usuario.displayName;
+        document.getElementById("email").textContent = usuario.email ?? "não informado";
+        document.getElementById("identificador").textContent = usuario.subject;
+        document.getElementById("dados").hidden = false;
+        document.getElementById("form-sair").hidden = false;
     })
     .catch(() => {
-        document.getElementById("percentual").textContent = "Não foi possível carregar dados.json.";
+        document.getElementById("saudacao").textContent = "Não foi possível consultar a sessão.";
     });
